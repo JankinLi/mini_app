@@ -21,10 +21,31 @@ Page({
       return
     }
     if (wx.getUserProfile) {
+      console.log('wx.getUserProfile return true')
       this.setData({
         canIUseGetUserProfile: true,
       })
     }
+  },
+
+  onShow: function(){
+    console.log('onShow in index.js')    
+  },
+
+  bindViewTap(){
+    console.log('user tap avatar.' , this.data.avatarUrl, this.data.canIUseGetUserProfile)
+    wx.getUserProfile({
+      desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      success: (res) => {
+        console.log('call getUserProfile success.', res)
+        this.setData({
+          userInfo: res.userInfo,            
+        })
+      },
+      fail: err=>{
+        console.log('call getUserProfile fail.' , err)
+      }
+    })
   },
 
   getUserProfile() {
@@ -32,6 +53,7 @@ Page({
     wx.getUserProfile({
       desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (res) => {
+        //console.log('getUserProfile success.')
         this.setData({
           avatarUrl: res.userInfo.avatarUrl,
           userInfo: res.userInfo,

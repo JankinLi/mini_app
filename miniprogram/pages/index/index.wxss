@@ -159,3 +159,10 @@ page {
   line-height: 36rpx;
   word-break: break-all;
 }
+
+.user-info-column{ 
+  padding: 0 20rpx; 
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}

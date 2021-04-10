@@ -72,6 +72,13 @@
       <text>云调用</text>
     </navigator>
   </view>
-
+  
+  <view class='userinfo'>    
+    <open-data type="userNickName" class='user-info-column'></open-data>
+    <open-data type="userGender"  lang="zh_CN" class='user-info-column'></open-data>
+    <block wx:if="{{userInfo}}">
+      <text class='user-info-column'>{{userInfo.country}}</text>
+    </block>
+  </view>
 
 </view>
