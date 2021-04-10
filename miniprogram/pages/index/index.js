@@ -3,6 +3,7 @@ const app = getApp()
 
 Page({
   data: {
+    imgUrl: '',
     avatarUrl: './user-unlogin.png',
     userInfo: {},
     hasUserInfo: false,
@@ -30,7 +31,13 @@ Page({
   },
 
   onShow: function(){
-    console.log('onShow in index.js')    
+    console.log('onShow in index.js')
+    if (app.globalData.imagePath){
+      this.setData({
+        imgUrl: app.globalData.imagePath
+      })
+      console.log('this.data.imgUrl', this.data.imgUrl)
+    }   
   },
 
   bindViewTap(){
@@ -147,7 +154,7 @@ Page({
         })
       },
       fail: e => {
-        console.error(e)
+        console.error('user cancel.' , e)
       }
     })
   },
