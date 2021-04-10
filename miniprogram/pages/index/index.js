@@ -32,18 +32,27 @@ Page({
 
   onShow: function(){
     console.log('onShow in index.js')
-    if (app.globalData.imagePath){
+    const fileID = wx.getStorageSync('fileID') || ''
+    if (fileID != ''){
+      console.log('onShow fileID', fileID)
       this.setData({
-        imgUrl: app.globalData.imagePath
+        imgUrl: fileID
       })
-      console.log('this.data.imgUrl', this.data.imgUrl)
-    }   
+    }
+    else{
+      if (this.data.imgUrl != ''){
+        this.setData({
+          imgUrl:''
+        })
+      }
+    }
   },
 
   bindViewTap(){
     console.log('user tap avatar.' , this.data.avatarUrl, this.data.hasUserInfo)
     if (!this.data.hasUserInfo){
       wx.getUserProfile({
+        lang: 'zh_CN',
         desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
         success: (res) => {
           console.log('call getUserProfile success.', res)
@@ -122,7 +131,8 @@ Page({
         wx.showLoading({
           title: '上传中',
         })
-
+        
+        console.log('res.tempFilePaths' , res.tempFilePaths)
         const filePath = res.tempFilePaths[0]
         
         // 上传图片
@@ -136,7 +146,8 @@ Page({
             app.globalData.fileID = res.fileID
             app.globalData.cloudPath = cloudPath
             app.globalData.imagePath = filePath
-            
+            wx.setStorageSync('fileID', res.fileID)
+
             wx.navigateTo({
               url: '../storageConsole/storageConsole'
             })
@@ -158,5 +169,30 @@ Page({
       }
     })
   },
-
+  removeImage: function(){
+    const fileID = wx.getStorageSync('fileID') || ''
+    if (fileID == ''){
+      return
+    }
+    wx.showLoading({
+      title: '删除中',
+    })
+    wx.cloud.deleteFile({
+      fileList: [fileID],
+      success: res => {
+        // handle success
+        wx.removeStorageSync('fileID')
+        console.log("deleteFile success", res.fileList)
+        wx.navigateTo({
+          url: '../removeConsole/removeConsole'
+        })
+      },
+      fail: err => {
+        console.log('delete fail.' , err)
+      },
+      complete: res => {
+        wx.hideLoading()
+      }
+    })
+  }
 })

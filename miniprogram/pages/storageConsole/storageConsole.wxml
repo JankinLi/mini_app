@@ -13,6 +13,7 @@
     </view>
     <view class="list-item">
       <image class="image1" src="{{imagePath}}" mode="aspectFit"></image>
+      <!--<text class="request-text">文件路径：{{imagePath}}</text>-->
     </view>
   </view>
 

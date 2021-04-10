@@ -41,6 +41,10 @@
     </view>
     <view class="uploader-container" wx:if="{{imgUrl}}">
       <image class="uploader-image" src="{{imgUrl}}" mode="aspectFit" bindtap="previewImg"></image>
+      <button 
+        bindtap="removeImage"
+        class="userinfo-nickname">删除图片
+      </button>
     </view>
   </view>
 
