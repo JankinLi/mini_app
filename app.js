@@ -20,12 +20,10 @@ App({
           console.log('init')
           wx.cloud.callFunction({
             name:'login',
-            data:{
-              "code":res.code
-            },
-            sucess: res=>{
+            data:{},
+            success: res=>{
               console.log('receive res')
-              console.log('cloud login user openid:', res.userInfo.openid)
+              console.log('cloud login user openid:', res.result.openid)
             },
             fail: err=>{
               console.error('cloud login call fail.', err)
