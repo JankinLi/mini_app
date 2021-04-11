@@ -30,20 +30,28 @@ Page({
       })
     }
   },
-
+  // isEmpty: function (obj){
+  //   for (var name in obj) 
+  //   {
+  //     return false;
+  //   }
+  //   return true;
+  // },
   onShow: function(){
     console.log('onShow in index.js')
     const fileID = wx.getStorageSync('fileID') || ''
     if (fileID != ''){
-      if (app.globalData.imagePath!= ''){
-        this.setData({
-          imgUrl: app.globalData.imagePath,
-          hasImgUrl: true
-        })
-        console.log('onShow imgUrl', this.data.imgUrl)
-        return
-      }
-      if (this.data.hasImgUrl){
+      // if (app.globalData!=null && !this.isEmpty(app.globalData) && app.globalData.imagePath!= ''){
+      //   console.log('app.globalData', app.globalData)
+      //   this.setData({
+      //     imgUrl: app.globalData.imagePath,
+      //     hasImgUrl: true
+      //   })
+      //   console.log('onShow imgUrl', this.data.imgUrl)
+      //   return
+      // }
+      if(this.data.hasImgUrl){
+        console.log('onShow imgUrl', this.data.imgUrl)  
         return
       }
       console.log('onShow fileID', fileID)
@@ -58,6 +66,7 @@ Page({
           imgUrl:'',
           hasImgUrl: false
         })
+        console.log('clear imgUrl')
       }
     }
   },
@@ -136,6 +145,7 @@ Page({
 
   // 上传图片
   doUpload: function () {
+    const this_ref = this
     // 选择图片
     wx.chooseImage({
       count: 1,
@@ -146,7 +156,7 @@ Page({
           title: '上传中',
         })
         
-        console.log('res.tempFilePaths' , res.tempFilePaths)
+        console.log('wx.chooseImage success, res.tempFilePaths' , res.tempFilePaths)
         const filePath = res.tempFilePaths[0]
         
         // 上传图片
@@ -155,13 +165,19 @@ Page({
           cloudPath,
           filePath,
           success: res => {
-            console.log('[上传文件] 成功：', res)
+            console.log('[上传文件] 成功：', res.fileID)
 
             app.globalData.fileID = res.fileID
             app.globalData.cloudPath = cloudPath
             app.globalData.imagePath = filePath
 
             wx.setStorageSync('fileID', res.fileID)
+
+            this_ref.setData({
+              imgUrl: filePath,
+              hasImgUrl: true
+            })
+
             wx.navigateTo({
               url: '../storageConsole/storageConsole'
             })
@@ -197,6 +213,7 @@ Page({
         // handle success
         wx.removeStorageSync('fileID')
         console.log("deleteFile success", res.fileList)
+        app.globalData = {}
         wx.navigateTo({
           url: '../removeConsole/removeConsole'
         })
