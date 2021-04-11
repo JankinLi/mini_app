@@ -36,7 +36,7 @@
 
   <!-- 上传图片 -->
   <view class="uploader">
-    <view class="uploader-text" bindtap="doUpload">
+    <view class="uploader-text" bindtap="doUpload" wx:if="{{!hasImgUrl}}">
       <text>上传图片</text>
     </view>
     <view class="uploader-container" wx:if="{{imgUrl}}">

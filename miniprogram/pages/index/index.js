@@ -4,6 +4,7 @@ const app = getApp()
 Page({
   data: {
     imgUrl: '',
+    hasImgUrl: false,
     avatarUrl: './user-unlogin.png',
     userInfo: {},
     hasUserInfo: false,
@@ -34,15 +35,28 @@ Page({
     console.log('onShow in index.js')
     const fileID = wx.getStorageSync('fileID') || ''
     if (fileID != ''){
+      if (app.globalData.imagePath!= ''){
+        this.setData({
+          imgUrl: app.globalData.imagePath,
+          hasImgUrl: true
+        })
+        console.log('onShow imgUrl', this.data.imgUrl)
+        return
+      }
+      if (this.data.hasImgUrl){
+        return
+      }
       console.log('onShow fileID', fileID)
       this.setData({
-        imgUrl: fileID
+        imgUrl: fileID,
+        hasImgUrl: true
       })
     }
     else{
-      if (this.data.imgUrl != ''){
+      if (this.data.hasImgUrl){
         this.setData({
-          imgUrl:''
+          imgUrl:'',
+          hasImgUrl: false
         })
       }
     }
@@ -146,8 +160,8 @@ Page({
             app.globalData.fileID = res.fileID
             app.globalData.cloudPath = cloudPath
             app.globalData.imagePath = filePath
-            wx.setStorageSync('fileID', res.fileID)
 
+            wx.setStorageSync('fileID', res.fileID)
             wx.navigateTo({
               url: '../storageConsole/storageConsole'
             })
