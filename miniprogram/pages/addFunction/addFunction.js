@@ -45,6 +45,7 @@ Page({
         this.setData({
           result: JSON.stringify(res.result)
         })
+        console.log('testFunction success. res=', res)
       },
       fail: err => {
         wx.showToast({
