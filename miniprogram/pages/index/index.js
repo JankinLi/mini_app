@@ -40,7 +40,7 @@ Page({
   onShow: function(){
     console.log('onShow in index.js')
     const fileID = wx.getStorageSync('fileID') || ''
-    if (fileID != ''){
+    if (fileID){
       // if (app.globalData!=null && !this.isEmpty(app.globalData) && app.globalData.imagePath!= ''){
       //   console.log('app.globalData', app.globalData)
       //   this.setData({
