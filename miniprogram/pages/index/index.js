@@ -171,8 +171,6 @@ Page({
             app.globalData.cloudPath = cloudPath
             app.globalData.imagePath = filePath
 
-            wx.setStorageSync('fileID', res.fileID)
-
             this_ref.setData({
               imgUrl: filePath,
               hasImgUrl: true
@@ -224,6 +222,11 @@ Page({
       complete: res => {
         wx.hideLoading()
       }
+    })
+  },
+  previewImg :function(){
+    wx.navigateTo({
+      url: '../image_view/image_view',
     })
   }
 })

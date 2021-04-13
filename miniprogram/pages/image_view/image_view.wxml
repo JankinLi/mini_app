@@ -1,0 +1,10 @@
+<!--pages/image_view/image_view.wxml-->
+
+<view class='container'>
+  <text class='black'>李川</text>
+  <scroll-view
+    class="image_view"
+    scroll-y="true">
+    <image src="{{image_file_id}}" style='height:600px' mode="aspectFit"></image>
+  </scroll-view>
+</view>

@@ -1,0 +1,13 @@
+/* pages/image_view/image_view.wxss */
+
+@import "../../style/guide.wxss";
+
+.black {
+  color: #333;
+}
+
+.image_view {
+  display: flex;
+  flex-direction: row;
+  align-items: center;  
+} 
