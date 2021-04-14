@@ -40,20 +40,7 @@ Page({
   onShow: function(){
     console.log('onShow in index.js')
     const fileID = wx.getStorageSync('fileID') || ''
-    if (fileID){
-      // if (app.globalData!=null && !this.isEmpty(app.globalData) && app.globalData.imagePath!= ''){
-      //   console.log('app.globalData', app.globalData)
-      //   this.setData({
-      //     imgUrl: app.globalData.imagePath,
-      //     hasImgUrl: true
-      //   })
-      //   console.log('onShow imgUrl', this.data.imgUrl)
-      //   return
-      // }
-      if(this.data.hasImgUrl){
-        console.log('onShow imgUrl', this.data.imgUrl)  
-        return
-      }
+    if (fileID){      
       console.log('onShow fileID', fileID)
       this.setData({
         imgUrl: fileID,
@@ -145,7 +132,6 @@ Page({
 
   // 上传图片
   doUpload: function () {
-    const this_ref = this
     // 选择图片
     wx.chooseImage({
       count: 1,
@@ -169,12 +155,7 @@ Page({
 
             app.globalData.fileID = res.fileID
             app.globalData.cloudPath = cloudPath
-            app.globalData.imagePath = filePath
-
-            this_ref.setData({
-              imgUrl: filePath,
-              hasImgUrl: true
-            })
+            app.globalData.imagePath = filePath            
 
             wx.navigateTo({
               url: '../storageConsole/storageConsole'
@@ -209,7 +190,7 @@ Page({
       fileList: [fileID],
       success: res => {
         // handle success
-        wx.removeStorageSync('fileID')
+        wx.setStorageSync('fileID', '')
         console.log("deleteFile success", res.fileList)
         app.globalData = {}
         wx.navigateTo({

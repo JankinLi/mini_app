@@ -28,11 +28,7 @@ Page({
   onShow: function () {
     console.log('onShow in image_view.js')
     const fileID = wx.getStorageSync('fileID') || ''
-    if (fileID){
-      // if(this.data.has_image){
-      //   console.log('onShow image_file_id', this.data.image_file_id)  
-      //   return
-      // }
+    if (fileID){      
       console.log('onShow in image_view.js. fileID', fileID)
       this.setData({
         image_file_id: fileID,
